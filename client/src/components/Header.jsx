@@ -37,7 +37,7 @@ export default function Header() {
           <IoMoonSharp />
         </Button>
         <Link to="/sign-in">
-          <Button gradientDuoTone="purpleToPink" className="bg-gradient-to-">
+          <Button gradientDuoTone="purpleToPink" outline>
             Sign in
           </Button>
         </Link>
