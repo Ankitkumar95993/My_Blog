@@ -1,4 +1,7 @@
 
-exports.test = (req,res)=>{
-    res.json({message:'hello baby'});
+
+exports.signup = (req,res)=>{
+    console.log(req.body);
+    const {username,email,password} = req.body();
+   
 }
