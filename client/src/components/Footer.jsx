@@ -79,7 +79,7 @@ export default function FooterCom() {
               <Footer.Title title="legal" />
               <Footer.LinkGroup col>
                 <Footer.Link href="#"> privacy policy</Footer.Link>
-                <Footer.Link href="#"> Terms & conidtion</Footer.Link>
+                <Footer.Link href="#"> Terms & condition</Footer.Link>
               </Footer.LinkGroup>
             </div>
           </div>
