@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput,Label,Button } from "flowbite-react";
+import { TextInput,Label,Button,Alert } from "flowbite-react";
 import {Link,useNavigate} from "react-router-dom";
 import { useState } from "react";
 
@@ -54,7 +54,7 @@ export default function SignUp(){
             </span>
             Blogs
           </Link>
-          <p className="text-sm mt-5">This is a demo project. You can sign up with your email and password or with Google.</p>
+          <p className="text-sm mt-5">This is a demo project. You can sign in with your email and password or with Google.</p>
         </div>
 
         {/* rightdiv */}
@@ -63,11 +63,11 @@ export default function SignUp(){
            
             <div>
             <Label value="your email" />
-            <TextInput  type='text'  placeholder="Email" id="email" onChange={handleChange}/>
+            <TextInput  type='text'  placeholder="Company@gmail.com" id="email" onChange={handleChange}/>
             </div>
             <div>
             <Label value="your password" />
-            <TextInput  type='password'  placeholder="Password" id="password" onChange={handleChange}/>
+            <TextInput  type='password'  placeholder="********" id="password" onChange={handleChange}/>
             </div>
             <div className="flex flex-col gap-3 mt-4">
             <Button disabled={loading} gradientDuoTone='purpleToPink' type='submit' >Sign In</Button>
