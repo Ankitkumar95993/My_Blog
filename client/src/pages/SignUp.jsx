@@ -50,7 +50,7 @@ export default function SignUp(){
     <div className="min-h-screen mt-20">
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row gap-10">
         {/* left div */}
-        <div className="w-full flex-col justify-center mt-[50px]">
+        <div className="w-full flex-col justify-center mt-[100px]">
           <Link to="/" className="font-bold dark:text-white text-4xl" >
             <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
               Ankit's
@@ -62,7 +62,7 @@ export default function SignUp(){
 
         {/* rightdiv */}
         <div className="w-full">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-10">
             <div>
             <Label value="your username" />
             <TextInput  type='text'  placeholder="Username" id="username" onChange={handleChange}/>
