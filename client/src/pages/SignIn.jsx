@@ -7,7 +7,7 @@ export default function SignUp(){
 
   const [formData,setFormdata] = useState({});
   const [loading,setLoading] = useState(false);
-  const [error,setError] = useState(null);
+  const [errorMessage,setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e)=>{
@@ -16,8 +16,11 @@ export default function SignUp(){
   console.log(formData);
   const handleSubmit = async(e)=>{
     e.preventDefault();
+    if(!formData.email || !formData.password){
+      return setErrorMessage('Please fill out all the fields');
+    }
     try{
-      const res = await fetch("/api/auth/signup",{
+      const res = await fetch("/api/auth/signin",{
         method:'POST',
         headers:{
           "content-Type":"application/json",
@@ -27,17 +30,17 @@ export default function SignUp(){
       const data = await res.json();
       console.log(data);
       if(data.success === false)
-      { setError(data.message);
+      { setErrorMessage(data.message);
         setLoading(false);
         return;
       }
       setLoading(false);
-      setError(null);
-      navigate('/sign-in');
+      setErrorMessage(null);
+      navigate('/');
       
   }catch(error){
    setLoading(false);
-   setError(error.message);
+   setErrorMessage(error.message);
   }
 };
   return (
@@ -67,15 +70,19 @@ export default function SignUp(){
             <TextInput  type='password'  placeholder="Password" id="password" onChange={handleChange}/>
             </div>
             <div className="flex flex-col gap-3 mt-4">
-            <Button gradientDuoTone='purpleToPink' type='submit' >Sign In</Button>
+            <Button disabled={loading} gradientDuoTone='purpleToPink' type='submit' >Sign In</Button>
             {/* <Button outline className="bg-gradient-to-r from-red-500 to-purple-500 ">Continue with Google</Button> */}
             </div>
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>Have an account?</span>
             <Link to="/sign-up" className="text-blue-500">Sign Up</Link>
-
           </div>
+          {
+            errorMessage && (
+              <Alert className="mt-5" color="failure">{errorMessage}</Alert>
+            )
+          }
 
         </div>
       </div>
