@@ -54,11 +54,7 @@ exports.signin=async(req,res,next)=>{
     }
     const token =jwt.sign( {id:validUser._id},process.env.JWT_SECRET,);
     const {password:pass,...rest} = validUser._doc;
-    res.status(200).cookie('access_Token',token,{httpOnly:true}).json({
-      success:true,
-      message:'signin successful',
-      rest,
-    })
+    res.status(200).cookie('access_Token',token,{httpOnly:true}).json(rest);
 
   }catch(error){
     next(error);
