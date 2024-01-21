@@ -36,7 +36,7 @@ exports.signup = async (req,res,next) => {
   }
 };
 
-exports.signin=async(req,res)=>{
+exports.signin=async(req,res,next)=>{
 
   const{email,password} = req.body;
   if(!email || !password || email===''|| password==='') {
@@ -50,7 +50,7 @@ exports.signin=async(req,res)=>{
 
     const validPassword = bcrypt.compareSync(password,validUser.password);
     if(!validPassword){
-      return errorHandler(400,'Invalid Password');
+      return next(errorHandler(400,'Invalid Password'));
     }
     const token =jwt.sign( {id:validUser._id},process.env.JWT_SECRET,);
     const {password:pass,...rest} = validUser._doc;
@@ -63,7 +63,5 @@ exports.signin=async(req,res)=>{
   }catch(error){
     next(error);
   }
-  
-
 
 }
