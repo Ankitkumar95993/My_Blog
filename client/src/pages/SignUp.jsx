@@ -2,12 +2,12 @@ import React from "react";
 import { TextInput,Label,Button,Alert,Spinner} from "flowbite-react";
 import {Link,useNavigate} from "react-router-dom";
 import { useState } from "react";
+import Oauth from "../components/Oauth";
 
 export default function SignUp(){ 
 
   const [formData,setFormdata] = useState({});
   const [loading,setLoading] = useState(false);
-  // const [error,setError] = useState(null);
   const [errorMessage,setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ export default function SignUp(){
   }
 };
   return (
-    <div className="min-h-screen mt-[80px]">
+    <div className="min-h-screen mt-20">
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row gap-10">
         {/* left div */}
         <div className="w-full flex-col justify-center mt-[100px]">
@@ -85,6 +85,7 @@ export default function SignUp(){
               ): 'Sign Up'
               }
               </Button>
+              <Oauth/>
             </div>
           </form>
           <div className="flex gap-2 text-sm mt-5">
