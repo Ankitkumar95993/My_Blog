@@ -5,15 +5,14 @@ import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import { FaSun,FaMoon } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
-import {toggleTheme} from "../redux/theme/themeSlice";
-
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const path = useLocation().pathname;
   const dispatch = useDispatch();
-  const {theme} = useSelector((state)=>state.theme);
+  const { theme } = useSelector((state) => state.theme);
 
   return (
     <Navbar className="border-b-2">
@@ -41,11 +40,12 @@ export default function Header() {
 
       <div className="flex gap-2 md:order-2">
         <Button
-        className="w-12 h-10 hidden sm:inline"
-        color="gray" pill 
-        onClick = {()=>dispatch(toggleTheme())}
+          className="w-12 h-10 hidden sm:inline"
+          color="gray"
+          pill
+          onClick={() => dispatch(toggleTheme())}
         >
-        {theme==='light'?<FaSun/>:<FaMoon/>}
+          {theme === "light" ? <FaSun /> : <FaMoon />}
         </Button>
 
         {currentUser ? (
@@ -57,16 +57,18 @@ export default function Header() {
             }
           >
             <Dropdown.Header>
-             <span className="block text-sm">@{currentUser.username}</span>
-             <span className="block text-sm font-medium truncate">{currentUser.email}</span>
-             <Link to={"/dashboard?tab=profile"}>
-             <Dropdown.Divider/>
-             <Dropdown.Item>Profile</Dropdown.Item>
-             </Link>
-             <Dropdown.Divider/>
-             <Link to={"/dashboard?tab=profile"}>
-             <Dropdown.Item>SignOut</Dropdown.Item>
-             </Link>
+              <span className="block text-sm">@{currentUser.username}</span>
+              <span className="block text-sm font-medium truncate">
+                {currentUser.email}
+              </span>
+              <Link to={"/dashboard?tab=profile"}>
+                <Dropdown.Divider />
+                <Dropdown.Item>Profile</Dropdown.Item>
+              </Link>
+              <Dropdown.Divider />
+              <Link to={"/dashboard?tab=profile"}>
+                <Dropdown.Item>SignOut</Dropdown.Item>
+              </Link>
             </Dropdown.Header>
           </Dropdown>
         ) : (
@@ -76,7 +78,6 @@ export default function Header() {
             </Button>
           </Link>
         )}
-
         <Navbar.Toggle />
       </div>
 
