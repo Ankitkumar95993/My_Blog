@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const userRoutes = require('./routes/user.route');
 const authRoutes = require('./routes/auth.route');
+const cookieParser = require('cookie-parser');
 
 
 // Connect to MongoDB database using Mongo Atlas connection string.
@@ -16,6 +17,8 @@ mongoose.connect(process.env.MONGODB_URL).then(()=>console.log('db connection su
 
 const app = express();
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.listen(3000,()=>{
     console.log('app is running at port 3000');
