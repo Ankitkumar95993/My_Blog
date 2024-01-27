@@ -3,7 +3,6 @@ const User = require('../models/User.model');
 const bcrypt = require('bcrypt');
 
 exports.updateUser = async (req, res, next) => {
-   console.log(req.user);
   if (req.user.id !== req.params.userId) {
     return next(errorHandler(403, "you are not allowed to update this user"));
   }
@@ -23,7 +22,7 @@ exports.updateUser = async (req, res, next) => {
         errorHandler(400, "username must be between 7 and 20 character")
       );
     }
-  }
+  
   if (req.body.username.includes(' ')) {
     return next(errorHandler(400, "username cannot contains spaces"));
   }
@@ -34,6 +33,7 @@ exports.updateUser = async (req, res, next) => {
     return next(errorHandler(400, "Username can contains only letters and numbers")
     );
   }
+}
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
