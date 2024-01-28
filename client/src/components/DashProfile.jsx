@@ -28,6 +28,8 @@ export default function DashProfile() {
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
+  const [imageFileUploading,setImageFileUploading] = useState(false);
+  const [updateUserSuccess,setUpdateUserSuccess] = useState(null);
   const filePickerRef = useRef();
   const [formData, setFormData] = useState(null);
   const dispatch = useDispatch();
@@ -57,6 +59,7 @@ export default function DashProfile() {
     //       }
     //     }
     //   }
+    setImageFileUploading(true);
     setImageFileUploadError(null);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
@@ -77,6 +80,8 @@ export default function DashProfile() {
         setImageFileUploadProgress(null);
         setImageFile(null);
         setImageFileUrl(null);
+        setImageFileUploading(false);
+        setImageFileUploading(false);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -97,6 +102,9 @@ export default function DashProfile() {
       return;
     }
     try {
+      if(imageFileUploading) {
+        return;
+      }
       dispatch(updateStart());
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: "PUT",
@@ -105,13 +113,14 @@ export default function DashProfile() {
         },
         body: JSON.stringify(formData),
       });
-
-      const data = res.json();
+      const data = await res.json();
+      console.log(data);
       if (!res.ok) {
         dispatch(updateFailure(data.message));
         return;
       } else {
         dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully");
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
@@ -135,7 +144,6 @@ export default function DashProfile() {
 
     }catch(error){
       dispatch(deleteUserFailure(error.message));
-      
     }
 
   }
@@ -219,6 +227,11 @@ export default function DashProfile() {
         </span>
         <span className="text-red-500">Sign Out</span>
       </div>
+      {
+        updateUserSuccess && (
+          <Alert color='success' className="mt-5">{updateUserSuccess}</Alert>
+        )
+      }
 
       {error && (
         <Alert color='failure' className="mt-5">{error}</Alert>

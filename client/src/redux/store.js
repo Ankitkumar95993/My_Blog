@@ -10,9 +10,9 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig = {
-  key:'root',
+  key: 'root',
   storage,
-  version:1,
+  version: 1,
 };
 
 const persistedReducer = persistReducer(persistConfig,rootReducer);

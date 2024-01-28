@@ -5,7 +5,7 @@ const initialState = {
    error: null,
    loading: false,
 }
-export const userSlice =  createSlice({
+    const userSlice =  createSlice({
     name:'user',
     initialState,
     reducers:{
@@ -49,7 +49,7 @@ export const userSlice =  createSlice({
         },
         deleteUserFailure:(state,action)=>{
             state.loading=false;
-            state.loading = action.payload;
+            state.error = action.payload;
         }
      },
 });
