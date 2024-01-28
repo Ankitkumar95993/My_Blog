@@ -1,6 +1,6 @@
 const { errorHandler } = require("../utils/error");
-const User = require('../models/User.model');
-const bcrypt = require('bcrypt');
+const User = require("../models/User.model");
+const bcrypt = require("bcrypt");
 
 exports.updateUser = async (req, res, next) => {
   if (req.user.id !== req.params.userId) {
@@ -12,8 +12,8 @@ exports.updateUser = async (req, res, next) => {
       return next(
         errorHandler(400, "password length must be atleast 6 character")
       );
-   }
-   req.body.password = bcrypt.hashSync(req.body.password,10);
+    }
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
   }
 
   if (req.body.username) {
@@ -22,18 +22,19 @@ exports.updateUser = async (req, res, next) => {
         errorHandler(400, "username must be between 7 and 20 character")
       );
     }
-  
-  if (req.body.username.includes(' ')) {
-    return next(errorHandler(400, "username cannot contains spaces"));
+
+    if (req.body.username.includes(" ")) {
+      return next(errorHandler(400, "username cannot contains spaces"));
+    }
+    if (req.body.username !== req.body.username.toLowerCase()) {
+      return next(errorHandler(400, "Username must be lowercase"));
+    }
+    if (req.body.username.match(/^[a-zA-Z0-9]&$/)) {
+      return next(
+        errorHandler(400, "Username can contains only letters and numbers")
+      );
+    }
   }
-  if (req.body.username !== req.body.username.toLowerCase()) {
-    return next(errorHandler(400, "Username must be lowercase"));
-  }
-  if (req.body.username.match(/^[a-zA-Z0-9]&$/)) {
-    return next(errorHandler(400, "Username can contains only letters and numbers")
-    );
-  }
-}
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
@@ -46,7 +47,7 @@ exports.updateUser = async (req, res, next) => {
           password: req.body.password,
         },
       },
-      { new:true }
+      { new: true }
     );
     const { password, ...rest } = updatedUser._doc;
     res.status(200).json(rest);
@@ -55,5 +56,14 @@ exports.updateUser = async (req, res, next) => {
   }
 };
 
-
-
+exports.deleteUser = async (req, res, next) => {
+  if (req.user.id !== req.params.userId) {
+    return errorHandler(next(403, "you are not allowed to delete this user"));
+  }
+  try {
+    await User.findByIdAndDelete(req.params.userId);
+    res.status(200).json("User has been deleted");
+  } catch (error) {
+    next(error);
+  }
+};
