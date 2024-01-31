@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import {Link} from 'react-router-dom'
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { TextInput, Button, Alert, Modal } from "flowbite-react";
 import { useRef, useEffect, useState } from "react";
@@ -19,12 +20,12 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
-  signOutSuccess
+  signOutSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
 export default function DashProfile() {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -83,7 +84,6 @@ export default function DashProfile() {
         setImageFile(null);
         setImageFileUrl(null);
         setImageFileUploading(false);
-        setImageFileUploading(false);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -98,13 +98,12 @@ export default function DashProfile() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     // setUpdateUserError(null);
     // setUpdateUserSuccess(null);
     if (!formData || Object.keys(formData).length === null) {
-      setUpdateUserError('No changes made');
+      setUpdateUserError("No changes made");
       return;
     }
     // if (imageFileUploading) {
@@ -114,9 +113,9 @@ export default function DashProfile() {
     try {
       dispatch(updateStart());
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -235,9 +234,26 @@ export default function DashProfile() {
           placeholder="password"
           onChange={handleChange}
         />
-        <Button type="submit" gradientDuoTone="purpleToBlue" outline>
-          Update
+        <Button
+          type="submit"
+          gradientDuoTone="purpleToBlue"
+          outline
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Update"}
         </Button>
+
+        {currentUser.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button
+              type="button"
+              gradientDuoTone="purpleToPink"
+              className="w-full"
+            >
+              Create a Post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="flex justify-between mt-5">
         <span onClick={() => setShowModal(true)} className="text-red-500">
@@ -253,8 +269,8 @@ export default function DashProfile() {
         </Alert>
       )}
 
-{updateUserError && (
-        <Alert color='failure' className='mt-5'>
+      {updateUserError && (
+        <Alert color="failure" className="mt-5">
           {updateUserError}
         </Alert>
       )}
