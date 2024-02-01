@@ -3,9 +3,10 @@ const Post = require('../models/post.model');
 
 exports.create=async(req,res,next)=>{
       console.log(req.user.isAdmin);
-        // if(!req.user.isAdmin){
-        //     return next(errorHandler(403,'you are not allowed to create the post'));
-        // }
+      console.log(req.body);
+        if(!req.user.isAdmin){
+            return next(errorHandler(403,'you are not allowed to create the post'));
+        }
   
         if(!req.body.title || !req.body.content ){
             return next(errorHandler(400, 'please provide all required fields'));
