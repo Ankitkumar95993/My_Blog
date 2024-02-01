@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const userRoutes = require('./routes/user.route');
 const authRoutes = require('./routes/auth.route');
+const postRoutes = require('./routes/post.route');
 const cookieParser = require('cookie-parser');
 
 
@@ -26,6 +27,7 @@ app.listen(3000,()=>{
 
 app.use('/api/user',userRoutes);
 app.use('/api/auth',authRoutes);
+app.use('/api/post',postRoutes);
 
 
 app.use((err,req,res,next) =>{
