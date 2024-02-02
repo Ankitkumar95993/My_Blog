@@ -37,7 +37,7 @@ export default function DashSidebar() {
             </Sidebar.Item>
             </Link>
             )}
-            
+          
             <Sidebar.Item  icon={HiArrowSmRight} className='cursor-pointer'>
                SignOut
             </Sidebar.Item>
