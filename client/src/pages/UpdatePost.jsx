@@ -13,6 +13,7 @@ import {
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function UpdatePost() {
   const [file, setFile] = useState(null);
@@ -22,16 +23,14 @@ export default function UpdatePost() {
   const [publishError, setPublishError] = useState(null);
   const navigate = useNavigate();
   const { postId } = useParams();
-  console.log(formData);
-
-
+  const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     try {
       const fetchPost = async () => {
-        const res = await fetch(`/api/post/getPosts?postId=${postId}`);
-        const data = res.json();
+        const res = await fetch(`/api/post/getposts?postId=${postId}`);
+        const data = await res.json();
         if (!res.ok) {
-            console.log(data.message);
+          console.log(data.message);
           setPublishError(data.message);
           return;
         }
@@ -86,13 +85,16 @@ export default function UpdatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/post/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `/api/post/updatepost/${postId}/${currentUser._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json();
       if (!res.ok) {
@@ -107,6 +109,9 @@ export default function UpdatePost() {
       setPublishError("something went wrong");
     }
   };
+
+  console.log(formData);  
+
 
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
