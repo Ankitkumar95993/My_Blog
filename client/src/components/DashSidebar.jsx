@@ -33,7 +33,7 @@ export default function DashSidebar() {
             {currentUser.isAdmin && (
               <Link to="/dashboard?tab=posts" >
             <Sidebar.Item active={tab ==='posts'} icon={HiDocumentText} as='div' >
-                Post
+                Posts
             </Sidebar.Item>
             </Link>
             )}
@@ -41,7 +41,7 @@ export default function DashSidebar() {
             {currentUser.isAdmin && (
               <Link to="/dashboard?tab=users" >
             <Sidebar.Item active={tab ==='users'} icon={HiDocumentText} as='div' >
-                Post
+               Users
             </Sidebar.Item>
             </Link>
             )}
