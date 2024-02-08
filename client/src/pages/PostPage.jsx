@@ -48,7 +48,13 @@ export default function PostPage() {
     <img src={post && post.image} alt={post && post.title}  className="mt-12 p-3 max-h-[600px] 
     w-full object-cover "/>
 
-    <div></div>
+    <div className="p-3 flex justify-between border-b-2 border-slate-500 w-full max-w-2xl mx-auto text-xs">
+        <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
+        <span>{post && (post.content.length/1000).toFixed(0)} mins read</span>
+    </div>
+    <div  className="p-3 max-w-2xl mx-auto w-full post-content" dangerouslySetInnerHTML={{__html:post && post.content}}>
+
+    </div>
 
     </main>
 
