@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams,Link } from "react-router-dom";
-import {Spinner,Button} from 'flowbite-react';
+import { useParams, Link } from "react-router-dom";
+import { Spinner, Button } from "flowbite-react";
+import CallToAction from "../components/CallToAction";
+import CommentSection from "../components/CommentSection";
 
 export default function PostPage() {
   const { postSlug } = useParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
+  console.log(post && post._id);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -32,31 +35,52 @@ export default function PostPage() {
     fetchPost();
   }, [postSlug]);
 
-  if(loading) return(
-    <div className="flex justify-center items-center min-h-screen">
-        <Spinner size='xl'/>
-    </div>
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner size="xl" />
+      </div>
+    );
 
-  )
+  if (error || !post) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p>Error fetching post data</p>
+      </div>
+    );
+  }
   return (
-
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
-     <h1 className='text-center text-3xl m-10 font-serif max-w-2xl lg:text-4xl capitalize mx-auto'>{post && post.title}</h1>
-      <Link className="self-center mt-5" to={`/search?category=${post && post.category}`}>
-      <Button pill color='gray' size='xs' >{post && post.category}</Button>
+      <h1 className="text-center text-3xl m-10 font-serif max-w-2xl lg:text-4xl capitalize mx-auto">
+        {post && post.title}
+      </h1>
+      <Link
+        className="self-center mt-5"
+        to={`/search?category=${post && post.category}`}
+      >
+        <Button pill color="gray" size="xs">
+          {post && post.category}
+        </Button>
       </Link>
-    <img src={post && post.image} alt={post && post.title}  className="mt-12 p-3 max-h-[600px] 
-    w-full object-cover "/>
+      <img
+        src={post && post.image}
+        alt={post && post.title}
+        className="mt-12 p-3 max-h-[600px] 
+    w-full object-cover "
+      />
 
-    <div className="p-3 flex justify-between border-b-2 border-slate-500 w-full max-w-2xl mx-auto text-xs">
+      <div className="p-3 flex justify-between border-b-2 border-slate-500 w-full max-w-2xl mx-auto text-xs">
         <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
-        <span>{post && (post.content.length/1000).toFixed(0)} mins read</span>
-    </div>
-    <div  className="p-3 max-w-2xl mx-auto w-full post-content" dangerouslySetInnerHTML={{__html:post && post.content}}>
-
-    </div>
-
+        <span>{post && (post.content.length / 1000).toFixed(0)} mins read</span>
+      </div>
+      <div
+        className="p-3 max-w-2xl mx-auto w-full post-content"
+        dangerouslySetInnerHTML={{ __html: post && post.content }}
+      ></div>
+      <div className="max-w-4xl mx-auto w-full">
+        <CallToAction />
+      </div>
+      <CommentSection postId={post && post._id} />
     </main>
-
-  )
+  );
 }

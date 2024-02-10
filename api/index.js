@@ -5,6 +5,7 @@ require('dotenv').config();
 const userRoutes = require('./routes/user.route');
 const authRoutes = require('./routes/auth.route');
 const postRoutes = require('./routes/post.route');
+const commentRoutes = require('./routes/comment.route');
 const cookieParser = require('cookie-parser');
 
 
@@ -28,6 +29,7 @@ app.listen(3000,()=>{
 app.use('/api/user',userRoutes);
 app.use('/api/auth',authRoutes);
 app.use('/api/post',postRoutes);
+app.use('/api/comment',commentRoutes);
 
 
 app.use((err,req,res,next) =>{
