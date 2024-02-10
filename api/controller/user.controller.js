@@ -57,7 +57,7 @@ exports.updateUser = async (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res, next) => {
-  if (  !req.user.isAdmin && req.user.id !== req.params.userId) {
+  if (!req.user.isAdmin && req.user.id !== req.params.userId) {
     return errorHandler(next(403, "you are not allowed to delete this user"));
   }
   try {
@@ -91,7 +91,7 @@ exports.getUsers = async (req, res, next) => {
     const sortDirection = req.query.sort === "asc" ? 1 : -1;
 
     const users = await User.find()
-      .sort({createdAt:sortDirection})
+      .sort({ createdAt: sortDirection })
       .skip(startIndex)
       .limit(limit);
 
@@ -123,3 +123,15 @@ exports.getUsers = async (req, res, next) => {
   }
 };
 
+exports.getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      next(errorHandler(404, "user not found"));
+    }
+    const { password, ...rest } = user._doc;
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
