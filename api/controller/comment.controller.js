@@ -1,16 +1,19 @@
 const { errorHandler } = require("../utils/error");
 const Comment = require("../models/Comment.model");
 
+
+
 exports.createComment = async (req, res, next) => {
   try {
       const { content, postId, userId } = req.body;
+    
 
     if (!content || !postId || !userId) {
         return next(errorHandler(400, "Content, postId, and userId are required"));
       }
       
     if (userId !== req.user.id) {
-      return next(errorHandler(403, "you are not allowed to create this post"));
+      return next(errorHandler(403, "you are not allowed to create this comment"));
     }
 
 
@@ -20,6 +23,7 @@ exports.createComment = async (req, res, next) => {
       userId,
     });
     await newComment.save();
+    res.status(200).json(newComment);
   } catch (error) {
     next(error);
   }
