@@ -111,7 +111,7 @@ export default function CommentSection({ postId }) {
         <p className="text-sm my-5 "> No comments yet ! </p>
       ) : (
         <>
-        <div className=" flex text-sm my-5  item-center gap-1 ">
+        <div className=" flex text-sm my-5  items-center gap-1 ">
           <p>comments</p>
           <div className="border border-gray-400 py-1 px-1 rounded-sm">
             <p>{comments.length}</p>

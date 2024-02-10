@@ -55,7 +55,7 @@ exports.getPosts = async (req, res, next) => {
     const totalPost = await Post.countDocuments();
 
     const now = new Date();
-    
+
     const oneMonthAgo = new Date(
       now.getFullYear(),
       now.getMonth() - 1,
@@ -108,6 +108,23 @@ exports.updatePost = async (req, res, next) => {
     );
 
     res.status(200).json(updatedPost);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.likeComments = async (req, res, next) => {
+  try {
+    const comment = await Comment.findById(req.params.commentId);
+    if (!comment) {
+      return nexr(errorHandler(404, "comment not found"));
+    }
+    const userIndex = comment.likes.indexOf(req.user.id);
+    if (userIndex === -1) {
+      comment.likes.push(req.user.id);
+    } else {
+      comment.likes.splice(userIndex,1);
+    }
   } catch (error) {
     next(error);
   }
