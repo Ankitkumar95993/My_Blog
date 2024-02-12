@@ -113,19 +113,3 @@ exports.updatePost = async (req, res, next) => {
   }
 };
 
-exports.likeComments = async (req, res, next) => {
-  try {
-    const comment = await Comment.findById(req.params.commentId);
-    if (!comment) {
-      return nexr(errorHandler(404, "comment not found"));
-    }
-    const userIndex = comment.likes.indexOf(req.user.id);
-    if (userIndex === -1) {
-      comment.likes.push(req.user.id);
-    } else {
-      comment.likes.splice(userIndex,1);
-    }
-  } catch (error) {
-    next(error);
-  }
-};
