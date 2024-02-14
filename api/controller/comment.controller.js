@@ -63,3 +63,19 @@ exports.likeComments = async (req, res, next) => {
     next(error);
   }
 };
+
+
+exports.editComment = async(req,res,next)=>{
+ 
+  try{
+    const  editedComment = await Comment.findByIdAndUpdate(req.params.commentId);
+    res.status(200).json(editedComment);
+  }catch(error){
+    next(error);
+  }
+  
+  
+
+
+
+}
