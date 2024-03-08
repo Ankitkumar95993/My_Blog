@@ -17,7 +17,7 @@ const CommentModel = new mongoose.Schema({
   },
 
   likes:{
-    type:[String],
+    type:Array,
     default:[]
   },
 
