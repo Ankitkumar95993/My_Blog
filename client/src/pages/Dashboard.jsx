@@ -28,6 +28,7 @@ export default function Dashboard() {
       {tab ==='profile' && <DashProfile/>}
       {tab==='posts' && <DashPosts/>}
       {tab==='users' && <DashUsers/>} 
+      {tab==='comments' && <DashComments/>}
     </div>
   );
 }
