@@ -50,6 +50,8 @@ export default function MyBlog() {
                 <PostCard key={post._id} post={post} />
               ))}
             </div>
+            <Link to='/search' className="text-lg text-teal-500 
+            hover:underline text-center">view all posts</Link>
             
           </div>
         )}
