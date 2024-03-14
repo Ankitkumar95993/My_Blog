@@ -40,7 +40,7 @@ export default function DashboardComp() {
         console.log(error.message);
       }
     };
-    const fetchPosts = async () => {
+    const fetchPosts = async() => {
       try {
         const res = await fetch("/api/post/getposts?limit=5");
         const data = await res.json();
@@ -212,7 +212,7 @@ export default function DashboardComp() {
           <div className="flex justify-between p-3 text-sm font-semibold">
             <h1 className="text-center p-2 ">Recent Post</h1>
             <Button outline gradientDuoTone="purpleToPink">
-              <Link to={"/dashboard?tab=post"}>See All</Link>
+              <Link to={"/dashboard?tab=posts"}>See All</Link>
             </Button>
           </div>
           <Table hoverable>
