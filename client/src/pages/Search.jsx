@@ -53,7 +53,7 @@ export default function Search() {
   }, [location.search]);
 
   const handleChange = (e) => {
-    if (e.targer.id === "searchTerm") {
+    if (e.target.id === "searchTerm") {
       const searchTerm = e.target.value;
       setSidebarData({ ...sidebarData, searchTerm });
     }
@@ -106,7 +106,7 @@ export default function Search() {
         <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
           <div className="flex items-center gap-2">
             <label className="whitespace-nowrap font-semibold">
-              Search Term:
+              SearchTerm:
             </label>
             <TextInput
               placeholder="search...."
