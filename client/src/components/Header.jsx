@@ -1,18 +1,39 @@
 import React from "react";
 import { Navbar, TextInput, Button, Dropdown, Avatar } from "flowbite-react";
-import { Link } from "react-router-dom";
-// import { useState } from 'react';
+import { Link, Navigate } from "react-router-dom";
+import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { FaSun,FaMoon } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { FaSun, FaMoon } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
+import { useEffect } from "react";
+
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const path = useLocation().pathname;
+  const location = useLocation();
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("searchTerm", searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
 
   return (
     <Navbar className="border-b-2">
@@ -26,12 +47,14 @@ export default function Header() {
         </span>
         Blogs
       </Link>
-      <form>
+      <form  onSubmit={handleSubmit}>
         <TextInput
           type="text"
           placeholder="Search..."
           rightIcon={IoIosSearch}
           className="hidden lg:inline"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
       <Button className="w-12 h-10 lg:hidden" color="gray" pill>
@@ -45,7 +68,7 @@ export default function Header() {
           pill
           onClick={() => dispatch(toggleTheme())}
         >
-          {theme === "light" ? <FaMoon />: <FaSun /> }
+          {theme === "light" ? <FaMoon /> : <FaSun />}
         </Button>
 
         {currentUser ? (
