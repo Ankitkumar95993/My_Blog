@@ -19,7 +19,7 @@ export default function MyBlog() {
   return (
     <div>
       <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
-        <h1 className="text-3xl lg:text-6xl font-bold  text-gray-700 dark:text-yellow-500">
+        <h1 className="text-3xl lg:text-6xl font-bold  text-gray-700 dark:text-yellow-300">
           Welcome To My Blog
         </h1>
         <p className="text-xs sm:text-sm text-gray-500">
