@@ -24,8 +24,8 @@ export default function App() {
     <ScrollToTop/>
     <Header/>
     <Routes>
-      <Route path="/" element={<Home/>} />
       <Route path="/blog" element={<MyBlog/>} />
+      <Route path="/" element={<MyBlog/>} />
       <Route path="/search" element={<Search/>} />
       <Route path="/about" element={<About/>} />
       <Route path="/sign-in" element={<SignIn/>} />
