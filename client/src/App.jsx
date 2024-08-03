@@ -14,7 +14,6 @@ import CreatePost from './pages/CreatePost';
 import UpdatePost from './pages/UpdatePost';
 import PostPage from './pages/PostPage';
 import ScrollToTop from './components/ScrollToTop';
-import MyBlog from './pages/MyBlog';
 import Search from './pages/Search';
 
 
@@ -24,8 +23,7 @@ export default function App() {
     <ScrollToTop/>
     <Header/>
     <Routes>
-      <Route path="/blog" element={<MyBlog/>} />
-      <Route path="/" element={<MyBlog/>} />
+      <Route path="/" element={<Home/>} />
       <Route path="/search" element={<Search/>} />
       <Route path="/about" element={<About/>} />
       <Route path="/sign-in" element={<SignIn/>} />

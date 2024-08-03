@@ -14,11 +14,11 @@ export default function CallToAction() {
           className="rounded-tl-xl rounded-bl-none"
         >
           <a
-            href="https://www.100jsprojects.com"
+            href="https://github.com/Ankitkumar95993"
             target="_blank"
             rel="noopener noreferrer"
           >
-            100 Javascript Projects
+            GitHub Projects
           </a>
         </Button>
       </div>

@@ -110,6 +110,7 @@ export default function CreatePost() {
             <option value="python">Python</option>
             <option value="web-development">Web-Development</option>
             <option value="nextjs">NextJs</option>
+            <option value="devops">Devops</option>
           </Select>
         </div>
         <div
